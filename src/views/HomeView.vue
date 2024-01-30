@@ -1,18 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <period-picker />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="4">
+        <water-rate-card />
+
+        <meter-record-card />
+      </v-col>
+
+      <v-col cols="8">
+        <bills-card />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import PeriodPicker from "@/components/PeriodPicker.vue";
+import WaterRateCard from "@/components/WaterRateCard.vue";
+import MeterRecordCard from "@/components/MeterRecordCard.vue";
+import BillsCard from "@/components/BillsCard.vue";
 
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    PeriodPicker,
+    WaterRateCard,
+    MeterRecordCard,
+    BillsCard,
   },
 };
 </script>
