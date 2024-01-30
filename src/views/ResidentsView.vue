@@ -20,7 +20,7 @@
                 <v-spacer></v-spacer>
 
                 <v-dialog v-model="dialog" max-width="500px">
-                  <template v-slot:activator="{ props }">
+                  <template v-if="user" v-slot:activator="{ props }">
                     <v-btn color="primary" dark class="mb-2" v-bind="props">
                       New Item
                     </v-btn>
@@ -31,7 +31,7 @@
                       <span class="text-h5">{{ formTitle }}</span>
                     </v-card-title>
 
-                    <v-card-text>
+                    <v-card-text class="pa-0">
                       <v-container>
                         <v-row>
                           <v-col cols="12">
@@ -47,14 +47,13 @@
                               label="Area"
                             ></v-text-field>
                           </v-col>
-
-                          <v-col cols="12">
-                            <v-date-picker
-                              v-model="editedItem.start_date"
-                            ></v-date-picker>
-                          </v-col>
                         </v-row>
                       </v-container>
+
+                      <v-date-picker
+                        width="100%"
+                        v-model="editedItem.start_date"
+                      ></v-date-picker>
                     </v-card-text>
 
                     <v-card-actions>
@@ -107,7 +106,7 @@
               {{ formatDate(item.start_date) }}
             </template>
 
-            <template v-slot:item.actions="{ item }">
+            <template v-if="user" v-slot:item.actions="{ item }">
               <v-icon size="small" class="me-2" @click="editItem(item)">
                 mdi-pencil
               </v-icon>
@@ -154,6 +153,7 @@ export default {
   }),
   computed: {
     ...mapState({
+      user: (state) => state.auth.user,
       loading: (state) => state.loading,
       residents: (state) => state.resident.items,
       lastPage: (state) => state.resident.lastPage,
@@ -200,7 +200,6 @@ export default {
         this.$store.commit("LOADING", false);
       } catch (e) {
         this.$store.commit("LOADING", false);
-        console.error(e);
       }
     },
     // CREATE/UPDATE

@@ -3,7 +3,12 @@
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
         <v-card class="pa-5" elevation="2">
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form
+            @submit.prevent="submit()"
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
             <v-text-field
               v-model="form.email"
               :rules="form.emailRules"
@@ -22,11 +27,11 @@
             ></v-text-field>
 
             <v-btn
+              type="submit"
               class="mt-3"
               block
               :disabled="!valid || loading"
               color="primary"
-              @click="submit"
             >
               <v-progress-circular
                 v-if="loading"
@@ -89,7 +94,6 @@ export default {
         } catch (e) {
           this.error = true;
           this.errorMessage = e.response?.data?.message || "Ошибка авторизации";
-          console.error(e);
         } finally {
           this.$store.commit("LOADING", false);
         }

@@ -8,9 +8,10 @@
         :rules="rules"
         label="Water Rate"
         hide-details
+        :disabled="!Boolean(user)"
       ></v-text-field>
 
-      <v-btn type="submit" block class="mt-2">Save</v-btn>
+      <v-btn v-if="user" type="submit" block class="mt-2">Save</v-btn>
     </v-form>
   </v-card>
 </template>
@@ -37,6 +38,7 @@ export default {
   }),
   computed: {
     ...mapState({
+      user: (state) => state.auth.user,
       periodDate: (state) => state.periodDate,
       loading: (state) => state.loading,
     }),
@@ -61,7 +63,6 @@ export default {
         this.$store.commit("LOADING", false);
       } catch (e) {
         this.$store.commit("LOADING", false);
-        console.error(e);
       }
     },
     async getWaterRate() {

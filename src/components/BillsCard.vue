@@ -2,7 +2,7 @@
   <v-card class="pa-5 mb-5">
     <h2>Bills List</h2>
 
-    <v-btn @click="createBills()" type="button" block class="mt-2"
+    <v-btn v-if="user" @click="createBills()" type="button" block class="mt-2"
       >Create bills</v-btn
     >
 
@@ -32,11 +32,12 @@ export default {
       { title: "Resident Name", key: "resident_name" },
       { title: "Bill Amount ", key: "amount_rub" },
     ],
+    loading: false,
   }),
   computed: {
     ...mapState({
+      user: (state) => state.auth.user,
       periodDate: (state) => state.periodDate,
-      loading: (state) => state.loading,
       bills: (state) => state.bill.items,
       lastPage: (state) => state.bill.lastPage,
       itemsLength: (state) => state.bill.itemsLength,
@@ -75,14 +76,13 @@ export default {
       }
 
       try {
-        this.$store.commit("LOADING", true);
+        this.loading = true;
 
         await this.getBills(params);
 
-        this.$store.commit("LOADING", false);
+        this.loading = false;
       } catch (e) {
-        this.$store.commit("LOADING", false);
-        console.error(e);
+        this.loading = false;
       }
     },
   },

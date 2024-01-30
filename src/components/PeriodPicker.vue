@@ -42,10 +42,6 @@ export default {
   }),
   methods: {
     updatePeriod() {
-      console.log(
-        `selected year ${this.selectedYear} selected month ${this.selectedMonth}`
-      );
-
       let lastDayOfMonth = new Date(
         +this.selectedYear,
         +this.selectedMonth + 1,
@@ -57,8 +53,6 @@ export default {
         +this.selectedMonth,
         lastDayOfMonth.getDate()
       );
-
-      console.log(`Picker set date ${date}`);
 
       this.$store.commit("UPDATE_PERIOD_DATE", date);
     },

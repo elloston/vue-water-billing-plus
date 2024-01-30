@@ -23,14 +23,16 @@ export default {
       dispatch("getBills");
     },
     // READ
-    async getBills({ commit, rootState }, params) {
+    async getBills({ commit, rootState }, params = {}) {
+      const { page = 1, sortBy = "id", order = "asc", perPage = 10 } = params;
+
       const res = await apiClient.get(`bills`, {
         params: {
           date: rootState.periodDate,
-          page: params.page,
-          sortBy: params.sortBy,
-          order: params.order,
-          perPage: params.perPage,
+          page,
+          sortBy,
+          order,
+          perPage,
         },
       });
 
